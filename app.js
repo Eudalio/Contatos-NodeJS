@@ -5,9 +5,10 @@ var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
+var load         = require('express-load');
 
-var routes = require('./routes/index');
-var users  = require('./routes/users');
+//var routes = require('./routes/index');
+//var users  = require('./routes/users');
 
 var app = express();
 
@@ -23,11 +24,13 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
-app.use(session({ secret: 'sua-chave-secreta' }));
+app.use(session({ secret: 'projetonodejseudalio021296' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+//app.use('/', routes);
+//app.use('/users', users);
+
+load('controllers').then('models').then('routes').into(app);
 
 //middleware
 app.use(erros.notfound);
